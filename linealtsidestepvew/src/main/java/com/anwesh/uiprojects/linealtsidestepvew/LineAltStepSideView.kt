@@ -21,6 +21,7 @@ val strokeFactor : Float = 90f
 val strokeColor : Int = Color.parseColor("#9C27B0")
 val backColor : Int = Color.parseColor("#BDBDBD")
 val strokeCap : Paint.Cap = Paint.Cap.ROUND
+val DELAY : Long = 25
 
 fun Int.inverse() : Float = 1f / this
 fun Float.maxScale(i : Int, n : Int) : Float = Math.max(0f, this - i * n.inverse())
@@ -47,7 +48,7 @@ fun Canvas.drawLASNode(i : Int, scale : Float, paint : Paint) {
         val scj2 : Float = sc2.divideScale(j, lines)
         val sf : Float = 1f - 2 * (j % 2)
         save()
-        translate((w / 2) * sf * scj2, j * hGap)
+        translate((w / 2 + paint.strokeWidth) * sf * scj2, j * hGap)
         rotate(-90f * sf * scj1)
         drawLine(0f, 0f, 0f, hGap, paint)
         restore()
@@ -99,7 +100,7 @@ class LineAltStepSideView(ctx : Context) : View(ctx) {
             if (animated) {
                 cb()
                 try {
-                    Thread.sleep(50)
+                    Thread.sleep(DELAY)
                     view.invalidate()
                 } catch(ex : Exception) {
 
@@ -214,7 +215,7 @@ class LineAltStepSideView(ctx : Context) : View(ctx) {
         fun create(activity : Activity) : LineAltStepSideView {
             val view : LineAltStepSideView = LineAltStepSideView(activity)
             activity.setContentView(view)
-            return view 
+            return view
         }
     }
 }
