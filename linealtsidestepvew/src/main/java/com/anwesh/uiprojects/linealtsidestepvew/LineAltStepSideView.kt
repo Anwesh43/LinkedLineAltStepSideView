@@ -186,4 +186,26 @@ class LineAltStepSideView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : LineAltStepSideView) {
+
+        private val animator : Animator = Animator(view)
+        private val las : LineAltStepSide = LineAltStepSide(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(backColor)
+            las.draw(canvas, paint)
+            animator.animate {
+                las.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            las.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
