@@ -209,4 +209,12 @@ class LineAltStepSideView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+        fun create(activity : Activity) : LineAltStepSideView {
+            val view : LineAltStepSideView = LineAltStepSideView(activity)
+            activity.setContentView(view)
+            return view 
+        }
+    }
 }
